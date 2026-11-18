@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+      - name: Select Xcode
+        run: sudo xcode-select -s "$(ls -d /Applications/Xcode*.app | sort -V | tail -1)"
+      - name: Unit tests
+        working-directory: TyphonCore
+        run: xcodebuild test -scheme TyphonCore-Package -destination 'platform=macOS' -skipMacroValidation -skipPackagePluginValidation
+      - name: Build app
+        run: |
+          xcodebuild -project Typhon.xcodeproj -scheme Typhon -configuration Release \
+            -skipMacroValidation -skipPackagePluginValidation CODE_SIGN_IDENTITY=- build

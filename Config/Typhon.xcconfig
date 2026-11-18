@@ -1,0 +1,14 @@
+// Shared build settings. Personal signing lives in Config/Local.xcconfig (git-ignored).
+MARKETING_VERSION = 1.0.0
+CURRENT_PROJECT_VERSION = 1
+GITHUB_REPOSITORY = dennisimoo/typhon
+// Sparkle EdDSA public key (the private key is a GitHub Actions secret, never committed).
+SPARKLE_PUBLIC_KEY = PQ1qhY/+xiOWA70+lCGTHT+jqox9w4xiYN+Krr6hfHY=
+// Ad-hoc signing by default so anyone can build from source.
+CODE_SIGN_STYLE = Manual
+CODE_SIGN_IDENTITY = -
+DEVELOPMENT_TEAM =
+OTHER_CODE_SIGN_FLAGS = --timestamp=none
+// Xcode's debug dylib fails library validation with self-signed or ad-hoc identities.
+ENABLE_DEBUG_DYLIB = NO
+#include? "Local.xcconfig"

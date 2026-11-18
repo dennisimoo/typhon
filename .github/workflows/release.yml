@@ -1,0 +1,58 @@
+name: Release
+
+# Push a tag like v1.0.0 to build Typhon, package a DMG, and publish a GitHub release
+# with a signed Sparkle appcast.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Select Xcode
+        run: sudo xcode-select -s "$(ls -d /Applications/Xcode*.app | sort -V | tail -1)"
+
+      - name: Tools
+        run: brew install create-dmg
+
+      - name: Version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
+      - name: Unit tests
+        working-directory: TyphonCore
+        run: xcodebuild test -scheme TyphonCore-Package -destination 'platform=macOS' -skipMacroValidation -skipPackagePluginValidation
+
+      - name: Build app and DMG
+        run: scripts/build-release.sh
+
+      - name: Sparkle appcast
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          if [ -z "$SPARKLE_PRIVATE_KEY" ]; then
+            echo "No SPARKLE_PRIVATE_KEY secret; skipping the appcast."; exit 0
+          fi
+          curl -sL -o sparkle.tar.xz https://github.com/sparkle-project/Sparkle/releases/download/2.10.1/Sparkle-2.10.1.tar.xz
+          mkdir sparkle && tar -xf sparkle.tar.xz -C sparkle
+          mkdir appcast && cp "dist/Typhon-$VERSION.zip" appcast/
+          printf "%s" "$SPARKLE_PRIVATE_KEY" | sparkle/bin/generate_appcast --ed-key-file - \
+            --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${GITHUB_REF_NAME}/" \
+            -o dist/appcast.xml appcast/
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          generate_release_notes: true
+          files: |
+            dist/Typhon-*.dmg
+            dist/Typhon-*.dmg.sha256
+            dist/Typhon-*.zip
+            dist/appcast.xml
