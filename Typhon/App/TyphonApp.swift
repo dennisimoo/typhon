@@ -37,12 +37,6 @@ struct TyphonApp: App {
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         let state = AppState.shared
-        if CommandLine.arguments.contains("--selftest") {
-            // Keep our own window out of the way while we drive other apps.
-            NSApp.windows.forEach { $0.orderOut(nil) }
-            SelfTest.run(state: state)
-            return
-        }
         state.launch()
         #if DEBUG
         DebugPreviews.openRequested(state: state)

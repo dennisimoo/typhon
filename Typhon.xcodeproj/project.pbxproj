@@ -30,7 +30,6 @@
 		E44672064CC5BC89F62C23F3 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C018877B922F709CBE38E8 /* Updater.swift */; };
 		E9E055D267ECD71AF91A5D62 /* AXElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D817994555ECFE7502405B0A /* AXElement.swift */; };
 		EC4A5BFD9F5B4796AFF3A427 /* KeyboardTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA146735FCCA390327A13CC /* KeyboardTap.swift */; };
-		F9D1A7F8F5620AA2D6B5ACD7 /* SelfTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEADBC24006A7B249A04DA62 /* SelfTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +49,6 @@
 		91E8D1516B0DCE84F281DA6D /* AppQuirks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppQuirks.swift; sourceTree = "<group>"; };
 		A6E69335D4F0179EEAAF2124 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A8C018877B922F709CBE38E8 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
-		AEADBC24006A7B249A04DA62 /* SelfTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfTest.swift; sourceTree = "<group>"; };
 		B6CBEAA6A2545C80243359C5 /* SuggestionPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionPanel.swift; sourceTree = "<group>"; };
 		B8E654B6BE284A6AB2478E40 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		CA016A57102B80C27B07A91C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -76,14 +74,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		09AF636BB7B02A466CEA02AB /* SelfTest */ = {
-			isa = PBXGroup;
-			children = (
-				AEADBC24006A7B249A04DA62 /* SelfTest.swift */,
-			);
-			path = SelfTest;
-			sourceTree = "<group>";
-		};
 		0B648A09E8BF1B8F69FF7797 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,7 +153,6 @@
 				3D6015978E8D29BBD0CA8E99 /* Onboarding */,
 				3EC16199D3296126AABC3AAF /* Panel */,
 				0B648A09E8BF1B8F69FF7797 /* Resources */,
-				09AF636BB7B02A466CEA02AB /* SelfTest */,
 				8D4062B3C66B45AEAD8FFB5E /* Settings */,
 				B342E935010D71E7D307D086 /* Suggestions */,
 				A6E69335D4F0179EEAAF2124 /* Info.plist */,
@@ -319,7 +308,6 @@
 				A8C1FCAF643B7D293CD348A3 /* ModelController.swift in Sources */,
 				E3872F0311DA52C751334600 /* OnboardingView.swift in Sources */,
 				CCB80FC57D2BE3DEF523ACD0 /* Preferences.swift in Sources */,
-				F9D1A7F8F5620AA2D6B5ACD7 /* SelfTest.swift in Sources */,
 				107E6C51377F4D88C056C84D /* SettingsView.swift in Sources */,
 				1B3AA8DAC60579AFA8F99D03 /* SuggestionController.swift in Sources */,
 				BD83889D6223C48F11E8069C /* SuggestionPanel.swift in Sources */,

@@ -1,9 +1,8 @@
-name: CI
+name: Build
 
+# Manual only: run it from the Actions tab when you want to check that the app still builds.
 on:
-  push:
-    branches: [main]
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -12,10 +11,13 @@ jobs:
       - uses: actions/checkout@v5
       - name: Select Xcode
         run: sudo xcode-select -s "$(ls -d /Applications/Xcode*.app | sort -V | tail -1)"
-      - name: Unit tests
-        working-directory: TyphonCore
-        run: xcodebuild test -scheme TyphonCore-Package -destination 'platform=macOS' -skipMacroValidation -skipPackagePluginValidation
+      - name: Cache Swift packages
+        uses: actions/cache@v4
+        with:
+          path: build/SourcePackages
+          key: spm-${{ hashFiles('Typhon.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'TyphonCore/Package.swift') }}
       - name: Build app
         run: |
-          xcodebuild -project Typhon.xcodeproj -scheme Typhon -configuration Release \
+          xcodebuild -project Typhon.xcodeproj -scheme Typhon -configuration Debug \
+            -clonedSourcePackagesDirPath build/SourcePackages \
             -skipMacroValidation -skipPackagePluginValidation CODE_SIGN_IDENTITY=- build

@@ -71,10 +71,10 @@ See [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md) for details and per-app quirk
 
 | App | Suggestions | Tab replaces text | Notes |
 |---|---|---|---|
-| TextEdit | ✅ | ✅ (Accessibility) | Verified by the self-test |
-| Notes | ✅ | ✅ (Accessibility) | Verified by the self-test |
-| Safari | ✅ | ✅ (keyboard + paste) | Verified by the self-test |
-| Chrome | ✅ seen once | ⚠️ in progress | Accessibility wake-up via `AXEnhancedUserInterface`; the self-test isn't reliable here yet |
+| TextEdit | ✅ | ✅ (Accessibility) | Verified |
+| Notes | ✅ | ✅ (Accessibility) | Verified |
+| Safari | ✅ | ✅ (keyboard + paste) | Verified |
+| Chrome | ✅ seen once | ⚠️ in progress | Accessibility wake-up via `AXEnhancedUserInterface`; not reliable yet |
 | Messages, Slack, Discord | — | — | Not yet tested |
 | Terminal, iTerm, Ghostty, Warp | off by default | — | Tab is shell completion there; can be turned on per app |
 | Password managers, password fields | never | — | Always skipped |
@@ -109,12 +109,7 @@ Local builds are ad-hoc signed by default. macOS ties the Accessibility permissi
 CODE_SIGN_IDENTITY = <your identity SHA-1 or name>
 ```
 
-**Tests and tools**
-
-- `TyphonCore` unit tests cover the diff, text scoping, the edit/rebase logic and the model manifest:
-  `cd TyphonCore && xcodebuild test -scheme TyphonCore-Package -destination 'platform=macOS'`
-- `typhon-bench <model-dir> [ref.json]` reports latency and checks that the output matches a reference.
-- `open Typhon.app --args --selftest --apps textedit,notes,safari` drives real apps end to end: it types a test sentence, waits for the bubble, presses Tab, and reads the field back. Results go to `~/Library/Application Support/Typhon/selftest.json`. See [docs/TEST_PLAN.md](docs/TEST_PLAN.md).
+**Tools:** `typhon-bench <model-dir> [ref.json]` reports per-fix latency and can compare output against a reference.
 
 **Releases:** push a tag such as `v1.0.0`. [`release.yml`](.github/workflows/release.yml) builds the app, packages the DMG, and drafts a GitHub release with a Sparkle appcast. Add a `SPARKLE_PRIVATE_KEY` repository secret to sign updates.
 

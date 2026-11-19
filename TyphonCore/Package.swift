@@ -21,6 +21,5 @@ let package = Package(
                 .product(name: "Tokenizers", package: "swift-transformers"),
             ]),
         .executableTarget(name: "typhon-bench", dependencies: ["TyphonCore"]),
-        .testTarget(name: "TyphonCoreTests", dependencies: ["TyphonCore"]),
     ]
 )

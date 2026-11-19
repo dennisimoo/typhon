@@ -2,7 +2,7 @@
 
 Typhon reads and edits text through the macOS Accessibility (AX) API. Apps expose very different amounts of it, so this page records what was **actually verified** and what wasn't.
 
-The self-test (`--selftest`) opens each app, clears an empty text field, types `cna u pikc up some milk on teh way hoem`, waits for the suggestion bubble, presses Tab, and reads the field back. It expects `Can you pick up some milk on the way home?`.
+Each app was checked by typing `cna u pikc up some milk on teh way hoem` into an empty text field, waiting for the suggestion bubble, pressing Tab, and reading the field back. The expected result is `Can you pick up some milk on the way home?`.
 
 Last run: macOS 27.2 (Typhon targets macOS 26 or later), Apple M5, Debug build.
 
@@ -28,15 +28,15 @@ Everything works through AX: value, selection, `kAXBoundsForRangeParameterizedAt
 `kAXSelectedText` can report success without editing anything, and the AX selection can report a range it never selected. Doing that edit through AX turned a replace into an insert, which duplicated text in early builds. Typhon now selects the words with real Shift+Arrow keystrokes, confirms the selected text matches exactly (polling briefly, because WebKit updates its tree a beat late), then pastes and restores your clipboard.
 
 **Chrome and Chromium browsers (Edge, Brave, Arc, Vivaldi…)**
-Chrome keeps its accessibility tree dormant. Typhon sets `AXEnhancedUserInterface` on the app when it becomes active. Text-marker bounds are used when range bounds fail. Editing uses the same keyboard path as Safari. In two later self-test runs, the textarea's AX value read as empty right after typing, so no suggestion appeared. This is still being investigated, and Chrome is marked ⚠️ until it passes reliably.
+Chrome keeps its accessibility tree dormant. Typhon sets `AXEnhancedUserInterface` on the app when it becomes active. Text-marker bounds are used when range bounds fail. Editing uses the same keyboard path as Safari. In two later runs, the textarea's AX value read as empty right after typing, so no suggestion appeared. This is still being investigated, and Chrome is marked ⚠️ until it passes reliably.
 
 > Side effect worth knowing: `AXEnhancedUserInterface` can make some window managers animate less smoothly in Chrome. Typhon only sets it on Chromium browsers.
 
 **Electron (Slack, Discord, VS Code, Notion…)**
-Typhon sets `AXManualAccessibility` on the app each time it becomes active, because VS Code-style apps can fall asleep again. Editing uses the keyboard path. Not yet verified with the self-test.
+Typhon sets `AXManualAccessibility` on the app each time it becomes active, because VS Code-style apps can fall asleep again. Editing uses the keyboard path. Not yet verified yet.
 
 **Messages**
-Return sends a message. Typhon never captures Return unless you change **Return key** in Settings. Not yet verified with the self-test.
+Return sends a message. Typhon never captures Return unless you change **Return key** in Settings. Not yet verified yet.
 
 **Terminals (Terminal, iTerm2, Ghostty, Warp, kitty, Alacritty, WezTerm)**
 Off by default: they don't expose an editable text field the way text views do, and Tab is shell completion. You can turn them on per app.
